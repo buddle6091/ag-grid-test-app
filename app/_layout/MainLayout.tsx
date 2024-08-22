@@ -9,7 +9,7 @@ const MainLayout = (props: MainLayoutProps) => {
     const { children } = props
 
   return (
-     <main className="flex-1 overflow-y-auto h-full px-7 py-4">
+     <main className="flex-1 overflow-y-auto w-full h-full px-7 py-4">
         {children}
      </main>
   )
