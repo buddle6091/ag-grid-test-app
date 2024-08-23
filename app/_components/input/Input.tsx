@@ -10,4 +10,15 @@ const Input = ({ ...props }: Props) => {
   )
 }
 
+export const InputWithLabel = () => {
+  return (
+    <>
+    <label className="py-[0.375rem] px-[0.75rem] w-full focus:outline-none text-[0.875rem] leading-5 rounded border border-[#EBEBEB]">
+      <Input />
+    </label>
+    </>
+
+  )
+}
+
 export default Input

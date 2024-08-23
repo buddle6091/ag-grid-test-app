@@ -9,7 +9,9 @@ import { GridReadyEvent, CellClickedEvent } from 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
 import ExposureResultRenderer from './exposureResultRenderer';
+import { useSetRecoilState } from 'recoil';
 import { DrawerTrigger } from '@/components/ui/drawer';
+import { drawerIsOpenAtom, categoryItemAtom } from '@/store/client/categoryAtom';
 
 interface IRow {
     name: string;
@@ -20,6 +22,7 @@ interface IRow {
 }
 
 const ItsmeCategoryGrid = () => {
+
     const [rowData, setRowData] = useState<IRow[]>([
       { name: '커피', order: 0, appExposure: true, kioskExposure: true, posExposure: true },
       { name: '블렌디드', order: 1, appExposure: true, kioskExposure: true, posExposure: true },
@@ -40,24 +43,22 @@ const ItsmeCategoryGrid = () => {
       { headerName: 'POS 노출', field: 'posExposure', cellRenderer: ExposureResultRenderer },
       ])
       
-      const defaultColDef: ColDef = {
+    const defaultColDef: ColDef = {
         flex: 1,
       };
 
-      const onGirdReady = useCallback((params: GridReadyEvent) => {
+    const onGirdReady = useCallback((params: GridReadyEvent) => {
         params.api.autoSizeAllColumns()
       }, [])
 
-      const gridOptions = {
-        // Add event handlers
-        onCellClicked: (params: IRow[]) => {
-            const data = params;
-        console.log('cell clicked: ', data)}
-    }
+    const setIsDrawerOpen = useSetRecoilState(drawerIsOpenAtom);
+    const setCategoryItem = useSetRecoilState(categoryItemAtom);
 
     const onCellClicked = useCallback((event: CellClickedEvent) => {
-        console.log('cellClicked', event?.data);
-      }, []);
+      setCategoryItem(event?.data);
+       console.log('cellClicked', event?.data);
+        setIsDrawerOpen(true);
+      }, [setCategoryItem, setIsDrawerOpen]);
 
 
 
